@@ -1,0 +1,80 @@
+{% load static %}
+{#用于页面跳转#}
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{% static "others/js/axios-0.18.0.min.js" %}"></script>
+    <script src="{% static "others/js/vue.js" %}"></script>
+     <script src="{% static "others/js/common.js" %}"></script>
+    <script src="{% static "others/js/element.js" %}"></script>
+</head>
+<body>
+<div id="app"></div>
+
+</body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            host: '',
+            screenWidth: document.body.clientWidth,
+            showlfetbox:true,
+        },
+        mounted() {
+            this.get_recent()
+            const that = this
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth
+                    that.screenWidth = window.screenWidth
+                })()
+            }
+
+        },
+        watch: {
+            screenWidth(val) {
+                // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+                if (!this.timer) {
+                    // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+                    this.screenWidth = val
+                    this.timer = true
+                    let that = this
+                    setTimeout(function () {
+                        // 打印screenWidth变化的值
+                        console.log(that.screenWidth)
+                        if (that.screenWidth < 1000) {
+                            that.showlfetbox = false
+                        } else {
+                            that.showlfetbox = true
+                        }
+                        that.timer = false
+                    }, 400)
+                }
+            }
+        },
+        methods: {
+            get_recent: function () {
+                axios.post(this.host + '/recent_scans', {}, {
+                    responseType: 'json',
+                    changeOrigin: true,
+                    withCredentials: true,
+                    headers: {
+                        'Authorization': localStorage.token
+                    }
+                }).then(response => {
+                    if (response.data.code === 201) {
+                        alert('请重新登陆')
+                        window.location.href = 'login/'
+                    } else {
+                        this.html = response.data.data
+                        document.write(this.html)
+                    }
+                })
+
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <title>登陆</title>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+{#    <link rel="stylesheet" href="{% static "landing/css/home.css" %}">#}
+    <link rel="stylesheet" href="{% static "others/css/element_ui.css" %}">
+    <link rel="stylesheet" href="{% static "others/css/login.css" %}">
+     <script src="{% static "others/js/common.js" %}"></script>
+    <script src="{% static "others/js/axios-0.18.0.min.js" %}"></script>
+    <script src="{% static "others/js/vue.js" %}"></script>
+    <script src="{% static "others/js/element.js" %}"></script>
+</head>
+
+<body style="margin: 0;background-color:#F6F6F6; height: 100%;">
+<div id='app'>
+    <div class='title'>业务安全检测平台</div>
+    <div class='login_box'>
+        <div class='usertext'>用户名 :</div>
+        <el-input class='login_input' auto-complete="new-password" v-model="input_user" placeholder="请输入用户名">
+        </el-input>
+        <br>
+        <div class='usertext'>密 &nbsp;&nbsp;码 :</div>
+        <el-input auto-complete="new-password" type='password' class='login_input' placeholder="请输入密码"
+                  v-model="input_pwd"
+                  prefix-icon="el-icon-lock" show-password clearable></el-input>
+        <br> <br>
+        <el-button type="info" class='login_button' @click='login'>
+            <div>登&nbsp;&nbsp;陆</div>
+        </el-button>
+    </div>
+    <div class='foot'><img src="../../static/img/logo.png" alt=""> 中国电信研究院</div>
+</div>
+</div>
+</body>
+<script src="{% static "others/js/login.js" %}"></script>
+
+</html>

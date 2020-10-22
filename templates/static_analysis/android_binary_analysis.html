@@ -1,0 +1,2071 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block sidebar_option %}
+    sidebar-mini
+{% endblock %}
+{% block extra_css %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "adminlte/plugins/datatables-bs4/dataTables.bootstrap4.min.css" %}">
+    <style type="text/css" media="print">
+        @page {
+            size: landscape;
+        }
+
+        @media print {
+            .btn, #scan_options {
+                display: none;
+            }
+        }
+    </style>
+    <style>
+        #app_icon {
+            width: 64px;
+            height: 64px;
+        }
+
+        #pre-wrap {
+            white-space: pre-wrap; /* css-3 */
+            white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+            white-space: -pre-wrap; /* Opera 4-6 */
+            white-space: -o-pre-wrap; /* Opera 7 */
+            word-wrap: break-word; /* Internet Explorer 5.5+ */
+        }
+
+        .td_url_email {
+
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            vertical-align: middle;
+
+        }
+
+        .p_url_email {
+            height: 48px;
+            margin-right: 10px;
+            margin-left: 10px;
+            padding-bottom: 5px;
+            margin-bottom: 5px;
+            overflow: auto
+        }
+
+        .p_phone_width {
+            width: 105px;
+        }
+
+        .p_card_width {
+            width: 155px;
+        }
+
+        .p_passport_width {
+            width: 88px;
+        }
+
+        .p_gps_width {
+            width: 105px;
+        }
+
+        .p_url_width {
+         width: auto;
+        }
+
+        .hr_url_email {
+            margin: 0;
+            padding-bottom: 5px
+        }
+
+        .line {
+            margin-top: 30px;
+            background: #485159;
+        }
+
+        .recent {
+            /* margin-top: -20px; */
+            margin-left: 12px;
+        }
+
+        .sideer2 {
+            position: relative;
+            top: -40px;
+        }
+
+        .dynamic {
+            margin-bottom: 50px;
+            margin-left: 12px;
+        }
+    </style>
+{% endblock %}
+{% block sidebar %}
+    <!-- Main Sidebar Container -->
+    <!-- Sidebar -->
+    <div class="sidebar sideer2">
+        <a href="{% url 'home' %}"><span class='info recent'>业务安全检测平台</span></a>
+        <hr class='line'>
+        </a>
+        <div class='info recent'>
+            <a href="/recent_scans" onmouseover="this.style.color='#FFFFFF'"
+               onmouseout="this.style.color='#D6D7D9'" class="d-block">最近分析</a>
+        </div>
+        <hr class='line'>
+        <div class="info recent">
+            <a href="#" class="d-block" onmouseover="this.style.color='#FFFFFF'"
+               onmouseout="this.style.color='#D6D7D9'">静态分析</a>
+        </div>
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column nav-child-indent" data-widget="treeview" role="menu"
+                data-accordion="false">
+
+                <li class="nav-item">
+                    <a href="#information" class="nav-link">
+                        <i class="nav-icon fas fa-info-circle"></i>
+                        <p>
+                            基本信息
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#scan_options" class="nav-link">
+                        <i class="nav-icon fas fa-cog"></i>
+                        <p>
+                            扫描选项
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#certificate" class="nav-link">
+                        <i class="nav-icon fas fa-certificate"></i>
+                        <p>
+                            开发者签名证书
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#sdk" class="nav-link">
+                        <i class="nav-icon fa fa-certificate"></i>
+                        <p>
+                            SDK
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#permissions" class="nav-link">
+                        <i class="nav-icon fas fa-list"></i>
+                        <p>
+                            权限列表
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#binary_analysis" class="nav-link">
+                        <i class="nav-icon fas fa-flag"></i>
+                        <p>
+                            二进制分析
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#android_api" class="nav-link">
+                        <i class="nav-icon fab fa-android"></i>
+                        <p>
+                            安卓API
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#browsable" class="nav-link">
+                        <i class="nav-icon fas fa-clone"></i>
+                        <p>
+                            可浏览Activities
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-shield-alt"></i>
+                        <p>
+                            安全分析
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#manifest" class="nav-link">
+                                <i class="fas fa-search nav-icon"></i>
+                                <p>Manifest分析</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#code_analysis" class="nav-link">
+                                <i class="fa fa-code nav-icon"></i>
+                                <p>代码分析</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#file_analysis" class="nav-link">
+                                <i class="fa fa-file nav-icon"></i>
+                                <p>文件分析</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-bug"></i>
+                        <p>
+                            恶意软件分析
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#apkid" class="nav-link">
+                                <i class="fas fa-fingerprint nav-icon"></i>
+                                <p>APKiD分析</p>
+                            </a>
+                        </li>
+                        {% if virus_total %}
+                            <li class="nav-item">
+                                <a href="#virus_total" class="nav-link">
+                                    <i class="fas fa-spider nav-icon"></i>
+                                    <p>VirusTotal</p>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="#malware_check" class="nav-link">
+                                <i class="fab fa-searchengin nav-icon"></i>
+                                <p>恶意域名检测</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-plus"></i>
+                        <p>
+                            侦查
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#urls" class="nav-link">
+                                <i class="fas fa-globe nav-icon"></i>
+                                <p>URLs</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#firebase" class="nav-link">
+                                <i class="fas fa-database nav-icon"></i>
+                                <p>Firebase数据库</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#emails" class="nav-link">
+                                <i class="fas fa-envelope nav-icon"></i>
+                                <p>邮件</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#trackers" class="nav-link">
+                                <i class="fas fa-user-secret nav-icon"></i>
+                                <p>跟踪器</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#strings" class="nav-link">
+                                <i class="fas fa-font nav-icon"></i>
+                                <p>字符串</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-th-large"></i>
+                        <p>
+                            组件
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="#activities" class="nav-link">
+                                <i class="fa fa-language nav-icon"></i>
+                                <p>Activities</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#services" class="nav-link">
+                                <i class="fa fa-cogs nav-icon"></i>
+                                <p>Services</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#receivers" class="nav-link">
+                                <i class="fa fa-assistive-listening-systems nav-icon"></i>
+                                <p>Receivers</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#providers" class="nav-link">
+                                <i class="fa fa-database nav-icon"></i>
+                                <p>Providers</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#libraries" class="nav-link">
+                                <i class="fab fa-buffer nav-icon"></i>
+                                <p>资源库</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#files" class="nav-link">
+                                <i class="far fa-copy nav-icon"></i>
+                                <p>文件</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="../PDF/?md5={{ md5 }}" class="nav-link">
+                        <i class="nav-icon fas fa-file-pdf"></i>
+                        <p>
+                            PDF报告
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript:window.print()" class="nav-link">
+                        <i class="nav-icon fa fa-print"></i>
+                        <p>
+                            打印报告
+                        </p>
+                    </a>
+                </li>
+                {% if dynamic_analysis_done %}
+                    <li class="nav-item">
+                        <a href="../dynamic_report/?hash={{ md5 }}&amp;package={{ package_name }}" class="nav-link">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>
+                                Dynamic Analysis Report
+                            </p>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a href="../android_dynamic/?hash={{ md5 }}&amp;package={{ package_name }}" class="nav-link">
+                            <i class="nav-icon fa fa-play-circle"></i>
+                            <p>
+                                开始动态分析
+                            </p>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+        <div class='dynamic'>
+            <a href="{% url 'dynamic' %}" onmouseover="this.style.color='#FFFFFF'"
+               onmouseout="this.style.color='#D6D7D9'">动态分析</a>
+        </div>
+    </div>
+    <!-- /.sidebar -->
+{% endblock %}
+{% block content %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <!--
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div id="mobsf_header" align="center">
+                  </div>
+                </div>
+              </div>-->
+        </div>
+        <!-- /.content-header -->
+
+
+        <!-- Main content -->
+        <a id="information" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <p><strong><i class="fas fa-check-double"></i>APP评分</strong></p>
+                                        <img id="app_icon"
+                                             src="{% if icon_found %}/download/{{ md5 }}-icon.png{% else %}{% static 'img/no_icon.png' %}{% endif %}"/>
+                                        {% if icon_hidden %}
+                                            <strong>Hidden Icon!</strong>
+                                        {% endif %}
+                                        <br/>
+                                        <span class="badge bg-info">CVSS平均分</span>
+                                        <strong>{{ average_cvss }} </strong><br/>
+                                        <span class="badge bg-{% if security_score < 50 %}danger{% elif security_score == 100 %}success{% else %}warning{% endif %}">安全评分</span>
+                                        <strong>{{ security_score }}/100 </strong><br/>
+                                        {% if trackers.detected_trackers > 0 %}
+                                            <span class="badge bg-warning">跟踪器探测</span>
+                                            <strong>{{ trackers.detected_trackers }}/{{ trackers.total_trackers }}</strong>
+                                            <br/>
+                                        {% else %}
+                                            <span class="badge bg-success">跟踪器探测</span>
+                                            <strong>{{ trackers.detected_trackers }}/{{ trackers.total_trackers }}</strong>
+                                            <br/>
+                                        {% endif %}
+                                        {% if virus_total and virus_total.items|length > 9 %}
+                                            {% if virus_total.positives > 0 %}
+                                                <span class="badge bg-danger">VirusTotal Detection</span>
+                                                <strong>{{ virus_total.positives }}/{{ virus_total.total }}</strong>
+                                                <br/>
+                                            {% else %}
+                                                <span class="badge bg-success">VirusTotal Detection</span>
+                                                <strong>{{ virus_total.positives }}/{{ virus_total.total }}</strong>
+                                                <br/>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong><i class="fas fa-box-open"></i> 文件信息 </strong></p>
+                                        <span class="badge bg-primary">文件名</span>
+                                        {{ file_name }}<br/>
+                                        <span class="badge bg-primary">文件大小</span>
+                                        {{ size }}<br/>
+                                        <span class="badge bg-primary">MD5</span>
+                                        {{ md5 }}<br/>
+                                        <span class="badge bg-primary">SHA1</span>
+                                        {{ sha1 }}<br/>
+                                        <span class="badge bg-primary">SHA256</span>
+                                        {{ sha256 }}<br/>
+                                    </div>
+                                    <div class="col-4">
+                                        <p><strong><i class="fas fa-info"></i> APP信息 </strong></p>
+                                        <span class="badge bg-primary">APP名称</span>
+                                        {{ app_name }}<br/>
+                                        <span class="badge bg-primary">包名</span>
+                                        {{ package_name }}<br/>
+                                        <span class="badge bg-primary">Main Activity</span>
+                                        {{ main_activity }}<br/>
+                                        <span class="badge bg-primary">Target SDK</span>
+                                        {{ target_sdk }}
+                                        <span class="badge bg-primary">Min SDK</span>
+                                        {{ min_sdk }}
+                                        <span class="badge bg-primary">Max SDK</span>
+                                        {{ max_sdk }}<br/>
+                                        <span class="badge bg-primary">安卓版本名称</span>
+                                        {{ version_name }}
+                                        <span class="badge bg-primary">安卓版本代码</span>
+                                        {{ version_code }}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Play Store -->
+                    {% if not playstore_details.error %}
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p>
+                                        <strong><i class="fab fa-google-play"></i> PLAYSTORE INFORMATION</strong>
+                                    </p>
+                                    <span class="badge bg-info">Title</span>
+                                    {{ playstore_details.title }} <br/>
+                                    <span class="badge bg-info">Score</span>
+                                    {{ playstore_details.score }}
+                                    <span class="badge bg-info">Installs</span>
+                                    {{ playstore_details.installs }}
+                                    <span class="badge bg-info">Price</span>
+                                    {{ playstore_details.price }}
+                                    <span class="badge bg-info">Android Version Support</span>
+                                    {{ playstore_details.androidVersionText }}
+                                    <span class="badge bg-info">Category</span>
+                                    {{ playstore_details.genre }}
+                                    <span class="badge bg-info">Play Store URL</span>
+                                    <a target="_blank" href="{{ playstore_details.url }}"> {{ package_name }} </a>
+                                    <br/>
+                                    <span class="badge bg-info">Developer</span>
+                                    {{ playstore_details.developer }},
+                                    <span class="badge bg-info">Developer ID</span>
+                                    {{ playstore_details.developerId }} <br/>
+                                    <span class="badge bg-info">Developer Address</span>
+                                    {{ playstore_details.developerAddress }} <br/>
+                                    <span class="badge bg-info">Developer Website</span>
+                                    {{ playstore_details.developerWebsite }} <br/>
+                                    <span class="badge bg-info">Developer Email</span>
+                                    {{ playstore_details.developerEmail }}
+                                    <br/>
+                                    <span class="badge bg-info">Release Date</span>
+                                    {{ playstore_details.released }}
+                                    <span class="badge bg-info">Privacy Policy</span>
+                                    <a target="_blank" href="{{ playstore_details.privacyPolicy }}">Privacy link</a>
+                                    <br/>
+                                    <span class="badge bg-info">Description</span>
+                                    <pre id="pre-wrap">{{ playstore_details.description }}</pre>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                    {% endif %}
+                    <!-- /.col -->
+                    <!-- row and container-->
+                </div>
+            </div>
+
+            <!-- Boxes -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                <div class="row">
+                                    <!-- Boxes columns -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-info">
+                                            <div class="inner">
+                                                <h3>{{ activities | length }}</h3>
+
+                                                <p>ACTIVITIES</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="fa fa-language"></i>
+                                            </div>
+                                            <a href="#activities" class="small-box-footer">View <i
+                                                    class="fas fa-arrow-circle-down"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-success">
+                                            <div class="inner">
+                                                <h3>{{ services | length }}</h3>
+
+                                                <p>SERVICES</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="fa fa-cogs"></i>
+                                            </div>
+                                            <a href="#services" class="small-box-footer">View <i
+                                                    class="fas fa-arrow-circle-down"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-warning">
+                                            <div class="inner">
+                                                <h3>{{ receivers | length }}</h3>
+
+                                                <p>RECEIVERS</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="fa fa-assistive-listening-systems"></i>
+                                            </div>
+                                            <a href="#receivers" class="small-box-footer">View <i
+                                                    class="fas fa-arrow-circle-down"></i></a>
+                                        </div>
+                                    </div>
+                                    <!-- ./col -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <!-- small box -->
+                                        <div class="small-box bg-danger">
+                                            <div class="inner">
+                                                <h3>{{ providers | length }}</h3>
+
+                                                <p>PROVIDERS</p>
+                                            </div>
+                                            <div class="icon">
+                                                <i class="fa fa-database"></i>
+                                            </div>
+                                            <a href="#providers" class="small-box-footer">View <i
+                                                    class="fas fa-arrow-circle-down"></i></a>
+                                        </div>
+                                        <!-- /.row -->
+                                    </div><!-- /.container-fluid -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box">
+                                            <span class="info-box-icon bg-info elevation-1"><i
+                                                    class="fas fa-language"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">导出 <br/>Activities</span>
+                                                <span class="info-box-number">
+                              {{ exported_count.exported_activities }}
+                            </span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-success elevation-1"><i
+                                                    class="fas fa-cogs"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">导出<br/>Services</span>
+                                                <span class="info-box-number">{{ exported_count.exported_services }}</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- /.col -->
+
+                                    <!-- fix for small devices only -->
+                                    <div class="clearfix hidden-md-up"></div>
+
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-warning elevation-1"><i
+                                                    class="fas fa-assistive-listening-systems"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">导出 <br/>Receivers</span>
+                                                <span class="info-box-number">{{ exported_count.exported_receivers }}</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                    <!-- /.col -->
+                                    <div class="col-12 col-sm-6 col-md-3">
+                                        <div class="info-box mb-3">
+                                            <span class="info-box-icon bg-danger elevation-1"><i
+                                                    class="fas fa-database"></i></span>
+
+                                            <div class="info-box-content">
+                                                <span class="info-box-text">导出 <br/>Providers</span>
+                                                <span class="info-box-number">{{ exported_count.exported_providers }}</span>
+                                            </div>
+                                            <!-- /.info-box-content -->
+                                        </div>
+                                        <!-- /.info-box -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- =========================end information==================================== -->
+
+
+        <a id="scan_options" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-cog"></i> 扫描选项</strong>
+                                </p>
+                                <p>
+                                    <a href="../StaticAnalyzer/?checksum={{ md5 }}&amp;name={{ file_name }}&amp;type=apk&amp;rescan=1"
+                                       class="btn btn-info" role="button"><i class="fa fa-sync"></i> 刷新（重新扫描）</a></p>
+                                <p>
+                                    <a href="../android_dynamic/?hash={{ md5 }}&amp;package={{ package_name }}"
+                                       class="btn btn-success" role="button"><i class="fa fa-play-circle"></i> 开始动态分析
+                                    </a>
+                                </p>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-file-code"></i> 反编译代码</strong>
+                                </p>
+                                <p>
+                                    <a target="_blank"
+                                       href="../ManifestView/?md5={{ md5 }}&amp;type={{ app_type }}&amp;bin=1"
+                                       role="button" class="btn btn-primary"><i class="fa fa-eye"></i>
+                                        查看AndroidManifest.xml</a>
+                                    <a href="../Java/?md5={{ md5 }}&amp;type={{ app_type }}" class="btn btn-info"
+                                       role="button"><i class="fa fa-code"></i> 查看Java</a>
+                                    <a href="../Smali/?md5={{ md5 }}" class="btn btn-info" role="button"><i
+                                            class="fa fa-code"></i> 查看 Smali</a>
+                                </p>
+                                <p>
+                                    <a href="../generate_downloads/?hash={{ md5 }}&amp;file_type=java"
+                                       class="btn btn-warning" role="button"> <i class="fa fa-download"></i>
+                                        下载Java代码</a>
+                                    <a href="../generate_downloads/?hash={{ md5 }}&amp;file_type=smali"
+                                       class="btn btn-warning"> <i class="fa fa-download"></i> 下载Smali代码</a>
+                                    <a href="../generate_downloads/?hash={{ md5 }}&amp;file_type=apk"
+                                       class="btn btn-warning"> <i class="fa fa-download"></i> 下载APK</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end scan options================================== -->
+        <a id="certificate" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-certificate"></i> 开发者签名证书</strong>
+                                </p>
+                                <pre><code>{{ certificate_analysis.certificate_info }}</code></pre>
+                                <!--Cert status-->
+                                {% if certificate_analysis.certificate_status == "good" %}
+                                    <strong>证书状态: </strong><span class="badge bg-success">Good</span><br/>
+                                    <strong>描述: </strong>{{ certificate_analysis.description }}<br/>
+                                {% elif certificate_analysis.certificate_status == "bad" %}
+                                    <strong>证书状态: </strong><span class="badge bg-danger">Bad</span><br/>
+                                    <strong>描述:</strong>{{ certificate_analysis.description }}<br/>
+                                {% elif  certificate_analysis.certificate_status == "missing" %}
+                                    <strong>证书状态: </strong><span class="badge bg-warning">Certificate missing</span>
+                                    <br/>
+                                    <strong>描述:</strong>{{ certificate_analysis.description }}<br/>
+                                {% elif certificate_analysis.certificate_status == "warning" %}
+                                    <strong>证书状态: </strong><span class="badge bg-warning">Warning</span><br/>
+                                    <strong>描述:</strong>{{ certificate_analysis.description }}<br/>
+                                {% endif %}
+
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+
+        </section>
+        <!-- ===========================end cert ================================== -->
+        <a id="sdk" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-certificate"></i> SDK</strong>
+                                <p>
+                                <div class="table-responsive">
+                                    <table id="table_permissions"
+                                           class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>SO</th>
+                                            <th>SDK</th>
+                                            <th>NAME</th>
+                                            <th>描述</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for desc in sdk_data %}
+                                            {% if desc.STATE == '0' %}
+                                                <tr>
+                                                    <td>{{ desc.SO_NAME }}</td>
+                                                    <td>{{ desc.SDK_NAME }}</td>
+                                                    <td>{{ desc.CN_NAME }}</td>
+                                                    <td><a href="{{ desc.WEBADDRESS }}"
+                                                           target="_blank">{{ desc.CONTENT }}</a></td>
+                                                    <!-- 渲染链接,和描述内容 -->
+                                                </tr>
+                                            {% endif %}
+                                            {% if desc.STATE == '1' %}
+                                                <tr>
+                                                    <td><font style="color: red;">{{ desc.SO_NAME }}</font></td>
+                                                    <td><font style="color: red;">{{ desc.SDK_NAME }}</font></td>
+                                                    <td><font style="color: red;">{{ desc.CN_NAME }}</font></td>
+                                                    <td><a href="{{ desc.WEBADDRESS }}" target="_blank"><font
+                                                            style="color: red;">{{ desc.CONTENT }}</font></a></td>
+                                                    <!-- 渲染链接,和描述内容 -->
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end so_and_sdk ================================== -->
+        <a id="permissions" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-list"></i> 应用程序权限</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_permissions"
+                                           class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>权限名称</th>
+                                            <th>状态</th>
+                                            <th>权限内容</th>
+                                            <th>权限描述</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for perm,desc in permissions.items %}
+                                            <tr>
+                                                <td>{{ perm }}</td>
+                                                <td>
+                                                    {% if desc.status == 'dangerous' %}
+                                                        <span class="badge bg-danger">dangerous</span>
+                                                    {% elif desc.status == 'normal' %}
+                                                        <span class="badge bg-info">normal</span>
+                                                    {% elif desc.status == 'signatureOrSystem' %}
+                                                        <span class="badge bg-warning">SignatureOrSystem</span>
+                                                    {% elif desc.status == 'signature' %}
+                                                        <span class="badge bg-success">signature</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>{{ desc.info }}</td>
+                                                <td>{{ desc.description }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end permission ================================== -->
+        <a id="binary_analysis" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-flag"></i> 共享库二进制分析</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_binary" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>问题</th>
+                                            <th>严重程度</th>
+                                            <th>描述</th>
+                                            <th>文件</th>
+
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in binary_analysis %}
+                                            <tr>
+                                                <td>
+                                                    {{ item|key:"title" | safe }}
+                                                </td>
+                                                <td>
+                                                    {% if item|key:"stat" == "high" %}
+                                                        <span class="badge bg-danger">high</span>
+                                                    {% elif item|key:"stat" == "info" %}
+                                                        <span class="badge bg-info">info</span>
+                                                    {% elif item|key:"stat" == "medium" %}
+                                                        <span class="badge bg-warning">medium</span>
+                                                    {% endif %}
+
+                                                </td>
+                                                <td>
+                                                    {{ item|key:"desc" | safe }}
+                                                </td>
+                                                <td>
+                                                    {{ item|key:"file" }}
+                                                </td>
+
+                                            </tr>
+                                        {% endfor %}
+                                        {% if not binary_analysis %}
+                                            <tr>
+                                                <td>
+                                                    <p> No issue found </p>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-info">info</span>
+                                                </td>
+                                                <td>
+                                                    <p></p>
+                                                </td>
+                                                <td>
+                                                    <p></p>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end binary analysis ================================== -->
+        <a id="android_api" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fab fa-android"></i> 安卓JAVA API</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_so" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>API</th>
+                                            <th>文件</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for desc, details in android_api.items %}
+                                            <tr>
+                                                <td>
+                                                    {{ desc }}
+                                                </td>
+                                                <td>
+                                                    {% for path in details|key:"path" %}
+                                                        <a href="../ViewSource/?file={{ path }}&amp;md5={{ md5 }}&amp;type={{ app_type }}"> {{ path }}</a>
+                                                        <br/>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end api analysis ================================== -->
+        <a id="browsable" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-clone"></i> 可浏览ACTIVITIES</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_browsable" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>ACTIVITY</th>
+                                            <th>INTENT</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for activity,intent_details in browsable_activities.items %}
+                                            <tr>
+                                            <td>{{ activity }}</td>
+                                            <td>
+                                            {% if intent_details|key:"schemes" %}
+                                                <strong>Schemes</strong>:
+                                                {% for scheme in intent_details|key:"schemes" %}
+                                                    {{ scheme }},
+                                                {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                            {% if intent_details|key:"hosts" %}
+                                                <strong>Hosts:</strong> {% for host in intent_details|key:"hosts" %}
+                                                {{ host }},
+                                            {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                            {% if intent_details|key:"ports" %}
+                                                <strong>Ports:</strong> {% for port in intent_details|key:"ports" %}
+                                                {{ port }},
+                                            {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                            {% if intent_details|key:"mime_types" %}
+                                                <strong>Mime Types:</strong>
+                                                {% for mime in intent_details|key:"mime_types" %}
+                                                    {{ mime }},
+                                                {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                            {% if intent_details|key:"paths" %}
+                                                <strong>Paths:</strong> {% for path in intent_details|key:"paths" %}
+                                                {{ path }},
+                                            {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                            {% if intent_details|key:"path_prefixs" %}
+                                                <strong>Path Prefixes:</strong>
+                                                {% for prefix in intent_details|key:"path_prefixs" %}
+                                                    {{ prefix }},
+                                                {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                            {% if intent_details|key:"path_patterns" %}
+                                                <strong>Path Patterns:</strong>
+                                                {% for pattern in intent_details|key:"path_patterns" %}
+                                                    {{ pattern }},
+                                                {% endfor %}
+                                                <br/>
+                                            {% endif %}
+                                        {% endfor %}
+                                        </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end browsable activities ================================== -->
+        <a id="manifest" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-search"></i> MANIFIEST分析</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_manifest" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>问题</th>
+                                            <th>严重程度</th>
+                                            <th>描述</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for item in manifest_analysis %}
+                                            <tr>
+                                                <td>
+                                                    {{ item|key:"title" | safe }}
+                                                </td>
+                                                <td>
+
+                                                    {% if item|key:"stat" == "high" %}
+                                                        <span class="badge bg-danger">high</span>
+                                                    {% elif item|key:"stat" == "info" %}
+                                                        <span class="badge bg-info">info</span>
+                                                    {% elif item|key:"stat" == "medium" %}
+                                                        <span class="badge bg-warning">medium</span>
+                                                    {% endif %}
+
+                                                </td>
+                                                <td>
+                                                    {{ item|key:"desc" }}
+                                                </td>
+
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end manifest analysis ================================== -->
+        <a id="code_analysis" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-code"></i> 代码分析</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_code" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>ISSUE</th>
+                                            <th>SEVERITY</th>
+                                            <th>STANDARDS</th>
+                                            <th>FILES</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for issue, details in code_analysis.items %}
+                                            <tr>
+                                                <td>
+                                                    {{ issue }}
+                                                </td>
+                                                <td>
+                                                    {% if details|key:"level" == "high" %}
+                                                        <span class="badge bg-danger">high</span>
+                                                    {% elif details|key:"level" == "good" %}
+                                                        <span class="badge bg-success">secure</span>
+                                                    {% elif details|key:"level" == "warning" %}
+                                                        <span class="badge bg-warning">warning</span>
+                                                    {% elif details|key:"level" == "info" %}
+                                                        <span class="badge bg-info">info</span>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <strong>CVSS V2:</strong>
+                                                    {{ details|key:"cvss" }}
+                                                    {% if details|key:"cvss" > 6 %}
+                                                        (high)
+                                                    {% elif details|key:"cvss" == 0 %}
+                                                        (info)
+                                                    {% elif details|key:"cvss" >= 4 %}
+                                                        (medium)
+                                                    {% elif details|key:"cvss" < 4 %}
+                                                        (low)
+                                                    {% endif %}
+                                                    {% if details|key:"cwe" %}<br> <strong>CWE: </strong>
+                                                        {{ details|key:"cwe" }}{% endif %}
+                                                    {% if details|key:"owasp" %}<br> <strong>OWASP Top 10: </strong>
+                                                        {{ details|key:"owasp" }}{% endif %}
+                                                    {% if details|key:"owasp-mstg" %}<br> <strong>OWASP MASVS: </strong>
+                                                        {{ details|key:"owasp-mstg" }}{% endif %}
+                                                </td>
+                                                <td>
+                                                    {% for path in details|key:"path" %}
+                                                        <a href="../ViewSource/?file={{ path }}&amp;md5={{ md5 }}&amp;type={{ app_type }}"> {{ path }}</a>
+                                                        <br/>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end code analysis ================================== -->
+        <a id="file_analysis" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-file"></i> 文件分析</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_file" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>ISSUE</th>
+                                            <th>FILES</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in file_analysis %}
+                                            <tr>
+                                                <td>
+                                                    {{ item|key:"finding" }}
+                                                </td>
+                                                <td>
+                                                    {% for cert_f in item|key:"files" %}
+                                                        {{ cert_f }}<br/>
+                                                    {% endfor %}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end file analysis ================================== -->
+        <a id="apkid" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-fingerprint"></i> APKiD 分析</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    <table id="table_apkid" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>DEX</th>
+					     <th style='width:40%;mini-width:500px'>  探测</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% if apkid %}
+                                            {% for file, details in apkid.items %}
+                                                <tr>
+                                                    <td>
+                                                        {{ file }}
+                                                    </td>
+                                                    <td>
+                                                        <table class="table table-bordered table-hover table-striped">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>FINDINGS</th>
+                                                                <th>DETAILS</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            {% for detail, idens in details.items %}
+                                                                <tr>
+                                                                    <td>
+                                                                        {% if detail == "anti_vm" %}
+                                                                            <span class="badge bg-warning">Anti-VM Code</span>
+                                                                        {% elif detail == "anti_disassembly" %}
+                                                                            <span class="badge bg-warning">Anti Disassembly Code</span>
+                                                                        {% elif detail == "anti_debug" %}
+                                                                            <span class="badge bg-warning">Anti Debug Code</span>
+                                                                        {% elif detail == "compiler" %}
+                                                                            <span class="badge bg-info">Compiler</span>
+                                                                        {% elif detail == "abnormal" %}
+                                                                            <span class="badge bg-warning">Abnormal Code</span>
+                                                                        {% elif detail == "obfuscator" %}
+                                                                            <span class="badge bg-warning">Obfuscator</span>
+                                                                        {% elif detail == "protector" %}
+                                                                            <span class="badge bg-info">Protector</span>
+                                                                        {% elif detail == "packer" %}
+                                                                            <span class="badge bg-danger">Packer Found</span>
+                                                                        {% elif detail == "dropper" %}
+                                                                            <span class="badge bg-danger">Dropper Found</span>
+                                                                        {% elif detail == "manipulator" %}
+                                                                            <span class="badge bg-warning">Manipulator Found</span>
+                                                                        {% else %}
+                                                                            <span class="badge bg-info">{{ detail }}</span>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                    <td> {% for idn in idens %} {{ idn }}
+                                                                        <br/> {% endfor %}</td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                            </tbody>
+                                                        </table>
+                                                    </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                        {% else %}
+                                            <p align="center"><strong>APKiD not enabled.</strong></p>
+                                        {% endif %}
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end apkid analysis ================================== -->
+        {% if virus_total %}
+            <a id="virus_total" class="anchor"></a>
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <p>
+                                        <strong><i class="fas fa-spider"></i> VIRUSTOTAL SCAN</strong>
+                                    </p>
+                                    <div class="table-responsive">
+                                        {% if virus_total.items|length < 9 %}
+                                            {% comment %} Basic check to determine if the response is a msg or a result {% endcomment %}
+                                            <p align="left">&nbsp;&nbsp;<strong>{{ virus_total.verbose_msg }}</strong>
+                                            </p>
+                                        {% else %}
+                                            <p align="left">&nbsp;&nbsp;<strong> {{ virus_total.positives }}
+                                                / {{ virus_total.total }}&nbsp; AVs found this file Malicious! </strong>
+                                                &nbsp;&nbsp;<a href="{{ virus_total.permalink }}" target="_blank"
+                                                               rel="noopener"><i class="fas fa-th-list"></i> Full Report</a>
+                                            </p>
+                                            {% if virus_total.positives > 0 %}
+                                                <table id="table_vt"
+                                                       class="table table-bordered table-hover table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>AV</th>
+                                                        <th>DETECTION</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {% for av_name,av_result in virus_total.scans.items %}
+                                                        {% if av_result.detected == True %}
+                                                            <tr>
+                                                                <td>
+                                                                    {{ av_name }}
+                                                                </td>
+                                                                <td>
+                                                                    <span class="badge bg-danger">{{ av_result.result }}</span>
+                                                                </td>
+                                                            </tr>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            {% endif %}{% comment %} if results.positive > 0 {% endcomment %}
+                                        {% endif %}{% comment %} if this is the upload msg or a result {% endcomment %}
+                                    </div>
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                        <!-- end row -->
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+        <!-- ===========================end virus total ================================== -->
+        <a id="malware_check" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fab fa-searchengin"></i>恶意域名检测</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    {% if domains %}
+                                        <table id="table_malware"
+                                               class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>域名</th>
+                                                <th>状态</th>
+                                                <th>地理定位</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for domain, details in domains.items %}
+                                                <tr>
+                                                    <td>{{ domain }}</td>
+                                                    <td>
+
+                                                        {% if details|key:"bad" == "yes" %}
+                                                            <span class="badge bg-danger">malware</span><br/>
+                                                            <pre>
+                      <strong>URL: </strong>{{ details|key:"domain_or_url" }}
+                      <strong>IP地址: </strong><span class="badge bg-danger">{{ details|key:"ip" }}</span>
+                      <strong>描述: </strong>{{ details|key:"desc" }}
+                      </pre>
+                                                        {% else %}
+                                                            <span class="badge bg-success">good</span><br/>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if details|key:"geolocation" %}
+                                                            <strong>IP地址: </strong>
+                                                            {{ details|key:"geolocation"|key:"ip" }}  <br/>
+                                                            <strong>国家: </strong>
+                                                            {{ details|key:"geolocation"|key:"country_long" }} <br/>
+                                                            <strong>地区: </strong>
+                                                            {{ details|key:"geolocation"|key:"region" }} <br/>
+                                                            <strong>城市: </strong>
+                                                            {{ details|key:"geolocation"|key:"city" }} <br/>
+                                                            <strong>纬度: </strong>
+                                                            {{ details|key:"geolocation"|key:"latitude" }} <br/>
+                                                            <strong>经度: </strong>
+                                                            {{ details|key:"geolocation"|key:"longitude" }} <br/>
+                                                            <strong>查看:<a target="_blank"
+                                                                          href="http://maps.google.com/maps?q={{ details|key:"geolocation"|key:"latitude" }},{{ details|key:"geolocation"|key:"longitude" }}">Google
+                                                            Map</a>
+                                                        {% else %}
+                                                            No Geolocation information available.
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end domain malware check ================================== -->
+        <a id="urls" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-globe"></i> URLS</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    {% if urls %}
+                                        <table id="table_urls" class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>URL</th>
+                                                <th>手机号</th>
+                                                <th>身份证号</th>
+                                                <th>护照号</th>
+                                                <th>GPS位置</th>
+                                                <th>出处</th>
+                                                <th>FILE</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for urldict in urls %}
+                                            <tr>
+                                                <td>
+                                                    {% for u in urldict|key:"urls" %}
+                                                        {{ u }} <br/>
+                                                    {% endfor %}
+                                                </td>
+                                                {% if urldict.results %}
+                                                    <td class="td_url_email">
+                                                        {% for res in urldict.results %}
+                                                            <p class="p_phone_width p_url_email">
+                                                                {% if res.phones %}
+                                                                    {% for phones in res.phones %}
+                                                                        {{ phones }}
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    {{ "/" }}
+                                                                {% endif %}
+                                                            </p>
+                                                            {% if not forloop.last %}
+                                                                <hr class="hr_url_email">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td class="td_url_email">
+                                                        {% for res in urldict.results %}
+                                                            <p class="p_card_width p_url_email">
+                                                                {% if res.cards %}
+                                                                    {% for cards in res.cards %}
+                                                                        {{ cards }}
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    {{ "/" }}
+                                                                {% endif %}
+
+                                                            </p>
+                                                            {% if not forloop.last %}
+                                                                <hr class="hr_url_email">
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                    </td>
+                                                    <td class="td_url_email">
+                                                        {#                       style="width:80px " #}
+                                                        {% for res in urldict.results %}
+
+                                                            <p class="p_passport_width p_url_email">
+                                                                {% if res.passports %}
+                                                                    {% for passports in res.passports %}
+                                                                        {{ passports }}
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    {{ "/" }}
+                                                                {% endif %}
+                                                            </p>
+                                                            {% if not forloop.last %}
+                                                                <hr class="hr_url_email">
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                    </td>
+                                                    <td class="td_url_email">
+                                                        {#                        style="width:105px"#}
+                                                        {% for res in urldict.results %}
+                                                            <p class="p_gps_width p_url_email">
+                                                                {% if res.gps_lng_lat %}
+                                                                    {% for gps_lng_lat in res.gps_lng_lat %}
+                                                                        {{ gps_lng_lat }}
+                                                                    {% endfor %}
+                                                                {% else %}
+                                                                    {{ "/" }}
+                                                                {% endif %}
+                                                            </p>
+                                                            {% if not forloop.last %}
+                                                                <hr class="hr_url_email">
+                                                            {% endif %}
+                                                        {% endfor %}
+
+
+                                                    </td>
+                                                    <td class="td_url_email">
+                                                        {#                        style="width:200px"#}
+                                                        {% for res in urldict.results %}
+                                                            <p class="p_url_width p_url_email">
+                                                                {% if res.url %}
+
+                                                                    {{ res.url }}
+
+                                                                {% else %}
+                                                                    {{ "/" }}
+                                                                {% endif %}
+                                                            </p>
+                                                            {% if not forloop.last %}
+                                                                <hr class="hr_url_email">
+                                                            {% endif %}
+                                                        {% endfor %}
+
+                                                    </td>
+                                                {% else %}
+                                                    <td>{{ "/" }}</td>
+                                                    <td>{{ "/" }}</td>
+                                                    <td>{{ "/" }}</td>
+                                                    <td>{{ "/" }}</td>
+                                                    <td>{{ "/" }}</td>
+                                                {% endif %}
+                                                <td>
+						   {% if urldict.path == "Android String Resource" %}
+                                                        Not Found
+                                                        {% else %}
+                                                        <a href="../ViewSource/?file={{ urldict|key:"path" }}&amp;md5={{ md5 }}&amp;type={{ app_type }}">{{ urldict|key:"path" }}</a>
+                                                    {% endif %}
+                                                </td>
+                                            {% endfor %}
+                                            </tbody>
+                                             </tr>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end urls ================================== -->
+        <a id="firebase" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-database"></i> FIREBASE数据库</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    {% if firebase_urls %}
+                                        <table id="table_firebase"
+                                               class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>FIREBASE URL</th>
+                                                <th>详细</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            {% for item in firebase_urls %}
+                                                <tr>
+                                                    <td>
+                                                        {{ item.url }}
+                                                    </td>
+                                                    <td>
+                                                        {% if item.open %}
+                                                            <span class="badge bg-danger">insecure</span><br/>Firebase
+                                                            Database is exposed publicly.
+                                                        {% else %}
+                                                            <span class="badge bg-primary">Info</span><br/>App talks to
+                                                            a Firebase database.
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end firebase db ================================== -->
+        <a id="emails" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-envelope"></i> 邮箱</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    {% if emails %}
+                                        <table id="table_emails" class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>EMAIL</th>
+                                                <th>手机号</th>
+                                                <th>身份证号</th>
+                                                <th>护照号</th>
+                                                <th>GPS位置</th>
+                                                <th>出处</th>
+                                                <th>FILE</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for email_dict in emails %}
+                                                <tr>
+                                                    <td>
+                                                        {% for e in email_dict|key:"emails" %}
+                                                            {{ e }} <br/>
+                                                        {% endfor %}
+                                                    </td>
+                                                    {% if email_dict.results %}
+                                                        <td class="td_url_email">
+                                                            {% for res in email_dict.results %}
+
+                                                                <p class="p_phone_width p_url_email">
+                                                                    {% if res.phones %}
+                                                                        {% for phones in res.phones %}
+                                                                            {{ phones }}
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        {{ "/" }}
+                                                                    {% endif %}
+                                                                </p>
+                                                                {% if not forloop.last %}
+                                                                    <hr class="hr_url_email">
+                                                                {% endif %}
+
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td class="td_url_email">
+                                                            {#                        style="width: 150px"#}
+                                                            {% for res in email_dict.results %}
+                                                                <p class="p_card_width p_url_email">
+                                                                    {% if res.cards %}
+                                                                        {% for cards in res.cards %}
+                                                                            {{ cards }}
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        {{ "/" }}
+                                                                    {% endif %}
+
+                                                                </p>
+                                                                {% if not forloop.last %}
+                                                                    <hr class="hr_url_email">
+                                                                {% endif %}
+                                                            {% endfor %}
+
+                                                        </td>
+                                                        <td class="td_url_email">
+                                                            {#                       style="width:80px " #}
+                                                            {% for res in email_dict.results %}
+
+
+
+                                                                <p class="p_passport_width p_url_email">
+                                                                    {% if res.passports %}
+                                                                        {% for passports in res.passports %}
+                                                                            {{ passports }}
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        {{ "/" }}
+                                                                    {% endif %}
+                                                                </p>
+                                                                {% if not forloop.last %}
+                                                                    <hr class="hr_url_email">
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td class="td_url_email">
+                                                            {#                        style="width:105px"#}
+                                                            {% for res in email_dict.results %}
+                                                                <p class="p_gps_width p_url_email">
+                                                                    {% if res.gps_lng_lat %}
+                                                                        {% for gps_lng_lat in res.gps_lng_lat %}
+                                                                            {{ gps_lng_lat }}
+                                                                        {% endfor %}
+                                                                    {% else %}
+                                                                        {{ "/" }}
+                                                                    {% endif %}
+                                                                </p>
+                                                                {% if not forloop.last %}
+                                                                    <hr class="hr_url_email">
+                                                                {% endif %}
+                                                            {% endfor %}
+
+
+                                                        </td>
+                                                        <td class="td_url_email">
+                                                            {#                        style="width:200px"#}
+                                                            {% for res in email_dict.results %}
+                                                                <p class="p_url_width p_url_email">{% if res.url %}
+                                                                    {{ res.url }}
+                                                                {% else %}
+                                                                    {{ "/" }}
+                                                                {% endif %}
+                                                                </p>
+                                                                {% if not forloop.last %}
+                                                                    <hr class="hr_url_email">
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </td>
+                                                    {% else %}
+                                                        <td>{{ "/" }}</td>
+                                                        <td>{{ "/" }}</td>
+                                                        <td>{{ "/" }}</td>
+                                                        <td>{{ "/" }}</td>
+                                                        <td>{{ "/" }}</td>
+                                                    {% endif %}
+
+                                                    <td>
+							{% if email_dict.path == "Android String Resource" %}
+                                                            Not Found
+                                                        {% else %}
+                                                        <a href="../ViewSource/?file={{ email_dict|key:"path" }}&amp;md5={{ md5 }}&amp;type={{ app_type }}">{{ email_dict|key:"path" }}</a>
+                                                        {% endif %}
+						   </td>
+
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+
+
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end emails ================================== -->
+        <a id="trackers" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-user-secret"></i> 跟踪器</strong>
+                                </p>
+                                <div class="table-responsive">
+                                    {% if trackers %}
+                                        <table id="table_trackers"
+                                               class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>跟踪器</th>
+                                                <th>URL</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for trk in trackers|key:"trackers" %}
+                                                <tr>
+                                                    {% for k, v in trk.items %}
+                                                        <td>
+                                                            {{ k }}
+                                                        </td>
+                                                        <td>
+                                                            <a target="_blank" href="{{ v }}">{{ v }}</a>
+                                                        </td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- end row -->
+                </div>
+            </div>
+        </section>
+        <!-- ===========================end trackers ================================== -->
+        <a id="strings" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fas fa-font"></i> 字符串</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for val in strings %}
+                                            {{ val }}<br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+        </section>
+        <!-- ===========================end strings ================================== -->
+        <a id="activities" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-language"></i> ACTIVITIES</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for act in activities %}
+                                            {{ act }} <br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+        </section>
+        <!-- ===========================end activities ================================== -->
+        <a id="services" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-cogs"></i> SERVICES</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for srv in services %}
+                                            {{ srv }} <br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+        </section>
+        <!-- ===========================end services ================================== -->
+        <a id="receivers" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-assistive-listening-systems"></i> RECEIVERS</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for rcv in receivers %}
+                                            {{ rcv }} <br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+
+        </section>
+        <!-- ===========================end receivers ================================== -->
+        <a id="providers" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fa fa-database"></i> PROVIDERS</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for prv in providers %}
+                                            {{ prv }} <br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+        </section>
+        <!-- ===========================end providers ================================== -->
+        <a id="libraries" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="fab fa-buffer"></i> LIBRARIES</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for lib in libraries %}
+                                            {{ lib }} <br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+        </section>
+        <!-- ===========================end libraries ================================== -->
+        <a id="files" class="anchor"></a>
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p>
+                                    <strong><i class="far fa-copy"></i> FILES</strong>
+                                </p>
+                                <div class="list-group">
+                                    <p>
+                                        {% for file in files %}
+                                            {{ file }} <br/>
+                                        {% endfor %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.card -->
+                </div>
+                <!-- end row -->
+            </div>
+        </section>
+        <!-- ===========================end files ================================== -->
+        <!-- end of contents -->
+    </div>
+{% endblock %}
+<!--end new UI-->
+{% block extra_scripts %}
+    <!-- DataTables -->
+    <script src="{% static "adminlte/plugins/datatables/jquery.dataTables.min.js" %} "></script>
+    <script src="{% static "adminlte/plugins/datatables-bs4/dataTables.bootstrap4.min.js" %}"></script>
+    <script>
+        $(function () {
+            // Datatable
+            $('table').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+                "responsive": true,
+            });
+        });
+        // Navbar Active
+        $(".nav-link").on("click", function () {
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");
+        });
+    </script>
+{% endblock %}
+
+

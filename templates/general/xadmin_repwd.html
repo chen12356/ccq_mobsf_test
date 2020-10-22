@@ -1,0 +1,227 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Mobile Security Framework (MobSF) is an automated, all-in-one mobile application (Android/iOS/Windows) pen-testing, malware analysis and security assessment framework capable of performing static and dynamic analysis.">
+    <meta name="author" content="Ajin Abraham">
+    <link rel="icon" href="{% static "img/favicon.ico" %}">
+    <title>Mobile Security Framework - MobSF</title>
+    <link rel="stylesheet" href="{% static "adminlte/dashboard/css/adminlte.min.css" %}">
+    <link rel="stylesheet" href="{% static "adminlte/plugins/fontawesome-free/css/all.min.css" %}">
+    <!-- <link rel="stylesheet" href="{% static "landing/css/home.css" %}"> -->
+    <link rel="stylesheet" href="{% static "others/css/element_ui.css" %}">
+    <script src="{% static "others/js/axios-0.18.0.min.js" %}"></script>
+    <script src="{% static "others/js/vue.js" %}"></script>
+    <script src="{% static "others/js/common.js" %}"></script>
+    <script src="{% static "others/js/element.js" %}"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<style>
+    body {
+        padding: 0px;
+        margin: 0px;
+        background: #F5F6FA;
+        text-align: center;
+        font-family: '微软雅黑', Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+        background-color: #FAFAFA;
+    }
+
+    body.sideMenu {
+        margin: 0;
+        -webkit-transform: none;
+        transform: none;
+    }
+
+
+    .rewpd_box {
+        position: relative;
+        margin: 0 auto;
+        top: 200px;
+        width: 600px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px 2px #888888;;
+
+    }
+
+    .rewpd_box span {
+        margin-right: 80px;
+    }
+
+    .old_pwd {
+        width: 400px;
+        height: 100px;
+        z-index: 9999;
+    }
+
+    .error_old_pwd {
+        position: absolute;
+        left: 310px;
+        color: red;
+        font-size: 10px;
+        margin-left: -80px;
+        margin-top: -5px;
+    }
+
+    .sendpassword {
+        width: 100px;
+        margin-left: -40px;
+    }
+
+    .pwdinput {
+        width: 50%;
+        height: 25px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        font-size: 10px;
+    }
+
+    .error_box {
+        height: 20px;
+    }
+
+</style>
+<body>
+
+{#<div class="topnav" id='app'>#}
+<div id='app'>
+
+
+    <!-- 正文 -->
+    <div class="rewpd_box">
+        <span>新&nbsp;密&nbsp;码&nbsp;:</span>
+        <input type="password" placeholder="请输入新密码" class='pwdinput' v-model='new_pwd' @change="shownewblanerror">
+        <div class='error_box'>
+            <div class='error_old_pwd' v-show='isShownewBlankErrmsg'>密码不能为空</div>
+        </div>
+        <span>确认密码:</span>
+        <input type="password" placeholder="请输入确认密码" class='pwdinput' v-model='sure_pwd' @blur="shownotsame">
+        <div class='error_box'>
+            <div class='error_old_pwd' v-show='isShowNotsame'>密码不一致</div>
+        </div>
+        <input type="button" value="确认" class='sendpassword' @click='sendpassword'>
+    </div>
+
+</div>
+</div>
+
+<script src="{% static "adminlte/plugins/jquery.min.js" %}"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            host: "",
+            token: '',
+            html: '',
+            screenWidth: document.body.clientWidth,
+            old_err_msg: "",
+            old_pwd: '',
+            showlfetbox: true,
+            isShow_selectbox: false,
+            isShowOldErrmsg: false,
+            isShowBlankErrmsg: false,
+            isShownewBlankErrmsg: false,
+            isShowNotsame: false,
+            new_pwd: '',
+            sure_pwd: '',
+
+
+        },
+        mounted() {
+        },
+        methods: {
+            sendpassword: function () {
+                if (this.new_pwd === '' || this.sure_pwd == '') {
+                    this.$notify({
+                        message: '密码为空',
+                        type: 'warning'
+                    });
+                } else {
+                    axios.post(window.location.href, {
+                            new_pwd: this.new_pwd,
+                            sure_pwd: this.sure_pwd
+                        },
+                        {
+                            responseType: 'json',
+                            changeOrigin: true,
+                            withCredentials: true,
+                        })
+                        .then(response => {
+                            if (response.data.code == 0) {
+                                this.$notify({
+                                    message: '密码修改成功',
+                                    type: 'success'
+                                });
+                               window.location.href = window.location.href.replace('password','update')
+
+                            } else if (response.data.code == 201) {
+                                alert('登陆已失效,请登录后重试')
+                            } else if (response.data.code == 202) {
+                                this.$notify({
+                                    message: '密码输入不一致',
+                                    type: 'warning'
+                                });
+                            } else if (response.data.code == 203) {
+                                this.$notify.error({
+                                    message: '旧密码输入错误'
+                                });
+                            } else if (response.data.code == 204) {
+                                this.$notify({
+                                    message: '新密码不能和旧密码一致',
+                                    type: 'warning'
+                                });
+                            } else if (response.data.code == 400) {
+                                this.$notify({
+                                    message: '密码为空',
+                                    type: 'warning'
+                                })
+                            }
+
+                        })
+                }
+            },
+            showblanerror: function () {
+                if (this.old_pwd == '') {
+                    this.isShowBlankErrmsg = true
+                } else {
+                    this.isShowBlankErrmsg = false
+                }
+            },
+            shownewblanerror: function () {
+                var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}')
+
+                if (this.new_pwd == '') {
+                    this.isShownewBlankErrmsg = true
+                } else if (!regex.test(this.new_pwd)) {
+                    this.$notify({
+                        message: '您的密码复杂度太低（密码中必须包含字母、数字、特殊字符），请及时修改密码!',
+                        type: 'error',
+                        duration: 2000
+                    });
+                    this.new_pwd = ''
+                } else {
+                    this.isShownewBlankErrmsg = false
+                }
+            },
+            shownotsame: function () {
+                if (this.sure_pwd != this.new_pwd) {
+                    this.isShowNotsame = true
+                } else {
+                    this.isShowNotsame = false
+                }
+            }
+        }
+
+    })
+
+
+</script>
+</body>
+</html>

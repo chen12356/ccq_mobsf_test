@@ -1,0 +1,492 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+          content="Mobile Security Framework (MobSF) is an automated, all-in-one mobile application (Android/iOS/Windows) pen-testing, malware analysis and security assessment framework capable of performing static and dynamic analysis.">
+    <meta name="author" content="Ajin Abraham">
+    <link rel="icon" href="{% static "img/favicon.ico" %}">
+    <title>Mobile Security Framework - MobSF</title>
+    <link rel="stylesheet" href="{% static "adminlte/dashboard/css/adminlte.min.css" %}">
+    <link rel="stylesheet" href="{% static "adminlte/plugins/fontawesome-free/css/all.min.css" %}">
+    <!-- <link rel="stylesheet" href="{% static "landing/css/home.css" %}"> -->
+     <link rel="stylesheet" href="{% static "others/css/element_ui.css" %}">
+    <script src="{% static "others/js/axios-0.18.0.min.js" %}"></script>
+    <script src="{% static "others/js/vue.js" %}"></script>
+    <script src="{% static "others/js/common.js" %}"></script>
+    <script src="{% static "others/js/element.js" %}"></script>
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<style>
+    body {
+        padding: 0px;
+        margin: 0px;
+        background:#F5F6FA ;
+        text-align: center;
+        font-family: '微软雅黑', Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+        background-color: #FAFAFA;
+    }
+
+    body.sideMenu {
+        margin: 0;
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    #sideToggle {
+        display: none;
+    }
+
+    #sideToggle:checked + aside {
+        left: -250px;
+    }
+
+    #sideToggle:checked ~ #wrap {
+        margin-left: -0px;
+    }
+
+    aside {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0px;
+        width: 250px;
+        background: #353A40;
+        transition: 0.2s ease-out;
+        -webkit-transition: 0.2s ease-out;
+        z-index: 100;
+    }
+
+    #wrap {
+        position: relative;
+        margin-left: 250px;
+        top: 17px;
+        z-index: 999;
+        padding: 0px 0px 0px 0px;
+        transition: 0.25s ease-out;
+        -webkit-transition: 0.25s ease-out;
+
+    }
+
+    #wrap > label {
+        display: inline-block;
+    }
+
+    #wrap > label {
+        float: left;
+        border-radius: 50px;
+        color: #FFF;
+        cursor: pointer;
+        display: block;
+        font-family: Courier New;
+        font-size: 25px;
+        font-weight: bold;
+        width: 30px;
+        height: 30px;
+        line-height: 35px;
+        text-align: center;
+        text-shadow: 0 -4px;
+    }
+
+    .t_title {
+        margin-top: 5%;
+        font-size: 20px;
+        margin-bottom: 10%;
+    }
+
+    .t_title a {
+        color: #D6D7D9;
+    }
+
+    .t_el {
+        margin-top: 5%;
+        margin-bottom: 5%;
+        top: -10px;
+    }
+
+    .t_el a {
+        color: #D6D7D9;
+        font-size: 18px;
+    }
+
+    .t_el_light a {
+        color: #08A8A2;
+    }
+
+    .line {
+        margin-top: -10px;
+        background: #485159;
+    }
+
+    .line1 {
+        background: #485159;
+        width: 90%;
+    }
+
+    .line2 {
+        background: #485159;
+        width: 90%;
+        margin-top: -3px;
+    }
+
+    .topbar_box {
+        position: fixed;
+        width: 100%;
+        height: 60px;
+        background: #007AFF;
+        z-index: 99;
+        top: -1px;
+    }
+
+    .top_menu {
+        float: right;
+        width: 100px;
+        margin-top: 20px;
+        margin-right: 40px;
+        cursor: pointer;
+        z-index: 999;
+        color: #FFFFFF;
+    }
+
+    .select_box {
+        position: relative;
+        background: #343A40;
+        width: 120px;
+        left: -10px;
+        top: 31px;
+        z-index: 999;
+        border-radius: 10px;
+
+    }
+
+    .demo {
+        position: relative;
+        margin-bottom: -5px;
+        margin-top: -15px;
+        height: 40px;
+        top: 10px;
+        color: #b7bfcd;
+        text-align: left;
+        font-size: 15px;
+    }
+    .demo img {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    .demo span{
+        margin-left: 4px;
+    }
+    .rewpd_box{
+        position: relative;
+        margin: 0 auto;
+        top: 200px;
+        left: 100px;
+        width: 600px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        background: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 5px 5px 5px 2px #888888;;
+
+    }
+    .rewpd_box span{
+        margin-right: 80px; 
+    }
+    .old_pwd{
+        width: 400px;
+        height: 100px;
+        z-index: 9999;
+    }
+    .error_old_pwd{
+        position:absolute;
+        left: 310px;
+        color:red;
+        font-size: 10px;
+        margin-left: -80px;
+        margin-top: -5px;
+    }
+    .sendpassword{
+        width: 100px;
+        margin-left: -40px;
+    }
+   .pwdinput{
+    width: 50%;
+        height: 25px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        font-size: 10px;
+   }
+   .error_box{
+       height: 20px;
+   }
+    
+</style>
+<body>
+
+{#<div class="topnav" id='app'>#}
+<div id='app'>
+    <div class="left_box">
+    <input type='checkbox' id='sideToggle'>
+    <aside>
+        <div>
+            <div class="t_title"><a href="{% url 'home' %}" onmouseover="this.style.color='#FFFFFF'"
+                                    onmouseout="this.style.color='#D6D7D9'">业务安全检测平台</a></div>
+            <hr class="line">
+            <div class="t_el"><a href="/recent_scans"
+                                 onmouseover="this.style.color='#FFFFFF'"
+                                 onmouseout="this.style.color='#D6D7D9'">最近分析</a></div>
+            <hr class="line1">
+            <div class="t_el "><a href="{% url 'home' %}">静态分析</a></div>
+            <hr class="line1">
+            <div class="t_el"><a href="{% url 'dynamic' %}"
+                                 onmouseover="this.style.color='#FFFFFF'"
+                                 onmouseout="this.style.color='#D6D7D9'">动态分析</a></div>
+        </div>
+    </aside>
+    <div id="wrap">
+        <label id='sideMenuControl' for='sideToggle'>=</label>
+    </div>
+</div>
+      <!-- topbar -->
+    <div class="topbar_box">
+        <div class="top_menu " @mouseover="showSelectbox" @mouseout="notshowSelectbox">
+            <div>个人信息</div>
+            <div class="blank_box" v-show="isShow_selectbox">
+                <div class="select_box">
+                    <div class="demo" onmouseover="this.style.color='#0075B7'" onmouseout="this.style.color='#E4DFE0'">
+                       <img src="../../static/img/1.png"> 个人账号
+                    </div>
+                    <hr class="line2">
+                    <div class="demo" @click="to_repwd" onmouseover="this.style.color='#0075B7'" onmouseout="this.style.color='#E4DFE0'">
+                       <img src="../../static/img/2.png"> 个人设置
+                    </div>
+                    <hr class="line2">
+                    <div class="demo" onmouseover="this.style.color='#0075B7'" onmouseout="this.style.color='#E4DFE0'">
+                       <img src="../../static/img/3.png"> 版本号
+                    </div>
+                    <hr class="line2">
+                    <div class="demo" onmouseover="this.style.color='#0075B7'" onmouseout="this.style.color='#E4DFE0'">
+                      <img src="../../static/img/4.png">  关于
+                    </div>
+                    <hr class="line2">
+                    <div class="demo" onmouseover="this.style.color='#0075B7'" onmouseout="this.style.color='#E4DFE0'"
+                         @click="logout"><img src="../../static/img/5.png" ><span>退出</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+ <!-- 正文 -->
+<div class="rewpd_box">
+   <span>旧&nbsp;密&nbsp;码&nbsp;:</span>
+   <input type="password" placeholder="请输入旧密码" class='pwdinput' v-model='old_pwd' @blur="showblanerror">
+   <div class='error_box'>
+    <div class='error_old_pwd' v-show='isShowOldErrmsg'>旧密码错误</div>
+    <div class='error_old_pwd' v-show='isShowBlankErrmsg'>密码不能为空</div>
+   </div>
+   <span>新&nbsp;密&nbsp;码&nbsp;:</span>
+   <input type="password" placeholder="请输入新密码" class='pwdinput' v-model='new_pwd' @blur="shownewblanerror">
+   <div  class='error_box'>
+    <div class='error_old_pwd' v-show='isShownewBlankErrmsg'>密码不能为空</div>
+   </div>
+   <span>确认密码:</span>
+   <input type="password" placeholder="请输入确认密码" class='pwdinput' v-model='sure_pwd' @blur="shownotsame" >
+   <div  class='error_box'>
+    <div class='error_old_pwd' v-show='isShowNotsame'>密码不一致</div>
+   </div>
+   <input type="button" value="确认" class='sendpassword' @click='sendpassword'>
+</div>
+
+</div>
+</div>
+
+<script src="{% static "adminlte/plugins/jquery.min.js" %}"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            host: "",
+            token: '',
+            html: '',
+            screenWidth: document.body.clientWidth,
+            old_err_msg:"",
+            old_pwd:'',  
+            showlfetbox: true,
+            isShow_selectbox: false,
+            isShowOldErrmsg:false,
+            isShowBlankErrmsg:false,
+            isShownewBlankErrmsg:false,
+            isShowNotsame:false,
+            new_pwd:'',
+            sure_pwd:'',
+
+
+        },
+        created: function () {
+            this.getUserToken()
+
+        },
+        mounted() {
+            const that = this
+            window.onresize = () => {
+                return (() => {
+                    window.screenWidth = document.body.clientWidth
+                    that.screenWidth = window.screenWidth
+                })()
+            }
+        },
+        watch: {
+            screenWidth(val) {
+                // 为了避免频繁触发resize函数导致页面卡顿，使用定时器
+                if (!this.timer) {
+                    // 一旦监听到的screenWidth值改变，就将其重新赋给data里的screenWidth
+                    this.screenWidth = val
+                    this.timer = true
+                    let that = this
+                    setTimeout(function () {
+                        // 打印screenWidth变化的值
+                        console.log(that.screenWidth)
+                        if (that.screenWidth < 1000) {
+                            that.showlfetbox = false
+                        } else {
+                            that.showlfetbox = true
+                        }
+                        that.timer = false
+                    }, 400)
+                }
+            }
+        },
+        methods: {
+            getUserToken: function () {
+                this.token = localStorage.token
+                // alert(token)
+                axios.get(this.host + 'verify', {
+                    responseType: 'json',
+                    changeOrigin: true,
+                    withCredentials: true,
+                    headers: {
+                        'Authorization': this.token
+                    }
+                })
+                    .then(response => {
+                        if (response.data.code === 0) {
+                        } else {
+                            alert('请重新登陆')
+                            window.location.href = 'login/'
+                        }
+                    })
+            },
+            to_recent: function () {
+                window.location.href = '/recent_scans'
+            },
+            logout: function () {
+                localStorage.clear()
+                location.reload();
+            },
+            showSelectbox: function () {
+                this.isShow_selectbox = true
+            },
+            notshowSelectbox: function () {
+                this.isShow_selectbox = false
+            },
+            to_repwd:function (){
+                window.location.href = 'repwd'
+            },
+            sendpassword:function(){
+                axios.post(this.host+'/repwd',{
+                    old_pwd : this.old_pwd,
+                    new_pwd : this.new_pwd,
+                    sure_pwd: this.sure_pwd
+                },
+                {
+                    responseType: 'json',
+                    changeOrigin: true,
+                    withCredentials: true,
+                    headers: {
+                        'Authorization': localStorage.token
+                    }
+                })
+                .then(response=>{
+                    if(response.data.code==0){
+                        this.$notify({
+                        message: '密码修改成功',
+                        type: 'success'
+                        });
+                        this.old_pwd = '',
+                        this.new_pwd = '',
+                        this.sure_pwd = ''
+                    }
+                    else if(response.data.code==201){
+                        alert('登陆已失效,请登录后重试')
+                    }
+                    else if(response.data.code==202){
+                        this.$notify({
+                        message: '密码输入不一致',
+                        type: 'warning',
+                        duration: 2000
+                        });
+                    }
+                    else if(response.data.code==203){
+                        this.$notify.error({
+                        message: '旧密码输入错误',
+                        duration: 2000
+                        });
+                    }
+                    else if(response.data.code==204){
+                        this.$notify({
+                        message: '新密码不能和旧密码一致',
+                        type: 'warning'
+                        });
+                    }
+          
+                })
+            },
+            showblanerror:function(){
+                if(this.old_pwd==''){
+                    this.isShowBlankErrmsg=true
+                }
+                else{
+                    this.isShowBlankErrmsg=false
+                }
+            },
+            shownewblanerror:function(){
+                var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}')
+                
+                if(this.new_pwd==''){
+                    this.isShownewBlankErrmsg=true
+                }
+                else if (!regex.test(this.new_pwd)) {
+                    this.$notify({
+                        message: '您的密码复杂度太低（密码中必须包含字母、数字、特殊字符），请及时修改密码!',
+                        type: 'error',
+                        duration: 2000
+                    });
+                    this.new_pwd = ''
+                }
+                else{
+                    this.isShownewBlankErrmsg=false
+                }  
+            },
+            shownotsame:function(){
+                if(this.sure_pwd!=this.new_pwd){
+                    this.isShowNotsame=true
+                }
+                else{
+                    this.isShowNotsame=false
+                }  
+            }
+        }
+
+    })
+
+
+</script>
+</body>
+</html>

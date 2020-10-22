@@ -1,0 +1,389 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Mobile Security Framework - MobSF">
+    <meta name="author" content="Ajin Abraham">
+    <link rel="stylesheet" href="{% static "others/css/element_ui.css" %}">
+    <link rel="stylesheet" href="{% static "others/css/login.css" %}">
+    <script src="{% static "others/js/axios-0.18.0.min.js" %}"></script>
+    <script src="{% static "others/js/vue.js" %}"></script>
+    <script src="{% static "others/js/common.js" %}"></script>
+    <script src="{% static "others/js/element.js" %}"></script>
+    <link rel="icon" href="{% static "img/favicon.ico" %}">
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static "adminlte/plugins/fontawesome-free/css/all.min.css" %}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static "adminlte/dashboard/css/adminlte.min.css" %}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{% static "adminlte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css" %}">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    {% block extra_css %}
+
+    {% endblock %}
+    <style>
+
+        .t_title {
+            margin-top: 5%;
+            font-size: 20px;
+            margin-bottom: 10%;
+        }
+
+        .t_title a {
+            color: #D6D7D9;
+        }
+
+        .t_el {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            top: -10px;
+        }
+
+        .t_el a {
+            color: #D6D7D9;
+            font-size: 18px;
+        }
+
+        .t_el_light a {
+            color: #08A8A2;
+        }
+
+        .line {
+            margin-top: -10px;
+            background: #485159;
+        }
+
+        .line1 {
+            background: #485159;
+            width: 90%;
+        }
+
+        .topbar_box {
+            position: fixed;
+            width: 100%;
+            height: 60px;
+            background: #007AFF;
+            z-index: 99;
+            top: -1px;
+        }
+
+        .search_box {
+            position: relative;
+            left: 85%;
+            top: 15px;
+        }
+
+        .search_box_input {
+            width: 500px;
+            background: #3394FF;
+            border: 0px;
+        }
+
+        .search_box_button {
+            color: #A3CFFD;
+        }
+
+        body {
+            padding: 0px;
+            margin: 0px;
+            text-align: center;
+            font-family: '微软雅黑', Trebuchet MS, Verdana, Helvetica, Arial, sans-serif;
+            background-color: #FAFAFA;
+        }
+
+        body.sideMenu {
+            margin: 0;
+            -webkit-transform: none;
+            transform: none;
+        }
+
+        #sideToggle {
+            display: none;
+        }
+
+        #sideToggle:checked + aside {
+            left: -250px;
+        }
+
+        #sideToggle:checked ~ #wrap {
+            margin-left: -0px;
+        }
+
+        aside {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0px;
+            width: 250px;
+            background: #353A40;
+            transition: 0.2s ease-out;
+            -webkit-transition: 0.2s ease-out;
+        {#margin-right: 20px;#} z-index: 100;
+        }
+
+        #wrap {
+            position: relative;
+            margin-left: 250px;
+            top: -40px;
+            z-index: 999;
+            padding: 0px 0px 0px 0px;
+            transition: 0.25s ease-out;
+            -webkit-transition: 0.25s ease-out;
+
+        }
+
+        #wrap > label {
+            display: inline-block;
+        }
+
+        #wrap > label {
+            float: left;
+        {#background: #005e99;#} border-radius: 50px;
+            color: #FFF;
+            cursor: pointer;
+            display: block;
+            font-family: Courier New;
+            font-size: 25px;
+            font-weight: bold;
+            width: 30px;
+            height: 30px;
+            line-height: 35px;
+            text-align: center;
+            text-shadow: 0 -4px;
+        }
+        #sideToggle:checked ~ #wrap2 {
+            left: -250px;
+        }
+         #wrap2 {
+            position: relative;
+            margin-left: 250px;
+            top: -40px;
+            z-index: 999;
+            padding: 0px 0px 0px 0px;
+            transition: 0.25s ease-out;
+            -webkit-transition: 0.25s ease-out;
+
+        }
+
+        #wrap2 > label {
+            display: inline-block;
+            position: fixed;
+        }
+
+        #wrap2 > label {
+            float: left;
+            border-radius: 50px;
+            color: #FFF;
+            cursor: pointer;
+            display: block;
+            font-family: Courier New;
+            font-size: 25px;
+            font-weight: bold;
+            width: 30px;
+            height: 30px;
+            line-height: 35px;
+            text-align: center;
+            text-shadow: 0 -4px;
+        }
+
+    </style>
+</head>
+<body class="hold-transition {% block sidebar_option %} {% endblock %} layout-fixed layout-navbar-fixed">
+<div class="wrapper " id="app">
+    {#侧边栏#}
+    <input type='checkbox' id='sideToggle'>
+    <aside>
+        <div>
+            <div class="t_title"><a href="{% url 'home' %}" onmouseover="this.style.color='#FFFFFF'"
+                                    onmouseout="this.style.color='#D6D7D9'">业务安全检测平台</a></div>
+            <hr class="line">
+            <div class="t_el"><a href="/recent_scans"
+                                 onmouseover="this.style.color='#FFFFFF'"
+                                 onmouseout="this.style.color='#D6D7D9'">最近分析</a></div>
+            <hr class="line1">
+            <div class="t_el "><a href="{% url 'home' %}">静态分析</a></div>
+            <hr class="line1">
+            <div class="t_el"><a href="{% url 'dynamic' %}"
+                                 onmouseover="this.style.color='#FFFFFF'"
+                                 onmouseout="this.style.color='#D6D7D9'">动态分析</a></div>
+        </div>
+    </aside>
+    <div id="wrap">
+        <label id='sideMenuControl' for='sideToggle'></label>
+    </div>
+    <div id="wrap2" >
+        <label id='sideMenuControl' for='sideToggle'>=</label>
+    </div>
+
+
+    <!-- 顶部导航栏 -->
+    <div class="topbar_box">
+        <!-- SEARCH FORM -->
+        <div class="search_box">
+            <form class="form-inline ml-3" action="/search" method="GET">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar search_box_input" id="navbar-search-input"
+                           type="search"
+                           placeholder="Search MD5" name="md5" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar search_box_button" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+        </div>
+
+        </form>
+    </div>
+
+
+    </nav>
+    <!-- /.navbar -->
+    <!-- sidebar-->
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="{% url 'home' %}" class="brand-link">
+            <img src="{% static "img/mobsf_icon.png" %}" alt="MobSF" class="brand-image"
+                 style="opacity: .8">
+            <span class="brand-text logo-lg"> | <strong> Mob</strong>SF</span>
+        </a>
+        {% block sidebar %}
+
+        {% endblock %}
+    </aside>
+    <!-- /.sidebar -->
+    <!-- Content Wrapper. Contains page content -->
+    {% block content %}
+
+    {% endblock %}
+
+
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static "adminlte/plugins/jquery.min.js" %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static "adminlte/plugins/jquery-ui.min.js" %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static "adminlte/plugins/bootstrap/bootstrap.bundle.min.js" %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static "adminlte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js" %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static "adminlte/dashboard/js/adminlte.min.js" %}"></script>
+<script>
+    // navbar hack
+    if ($(".sidebar-collapse")[0])
+        document.getElementById("nbar").style.display = "none";
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            host: '',
+
+
+        },
+        methods: {
+            getUserToken: function () {
+                {#alert('调用')#}
+                this.token = localStorage.token
+                // alert(token)
+                axios.get(this.host + 'verify', {
+                    responseType: 'json',
+                    changeOrigin: true,
+                    withCredentials: true,
+                    headers: {
+                        'Authorization': this.token
+                    }
+                })
+                    .then(response => {
+
+                        if (response.data.code === 0) {
+                            this.$message({
+                                message: '登陆成功',
+                                type: 'success',
+                                duration: 600,
+                            });
+                        } else {
+                            alert('请重新登陆')
+                            window.location.href = 'login/'
+                        }
+                    })
+            },
+
+        }
+    })
+
+
+</script>
+{% block extra_scripts %}
+
+{% endblock %}
+
+</body>
+<script>
+
+
+    var app = new Vue({
+        el: "#app",
+        data: {
+            host: '',
+
+        },
+        mounted(){
+            this.getUserToken()
+        },
+        methods: {
+            getUserToken: function () {
+                this.token = localStorage.token
+                // alert(token)
+                axios.get('http://'+ window.location.host + '/verify', {
+                    responseType: 'json',
+                    changeOrigin: true,
+                    withCredentials: true,
+                    headers: {
+                        'Authorization': this.token
+                    }
+                })
+                    .then(response => {
+
+                        if (response.data.code === 0) {
+                            this.$message({
+                                message: '登陆成功',
+                                type: 'success',
+                                duration: 600,
+                            });
+                        } else {
+                            alert('请重新登陆')
+                            window.location.href = '/login/'
+                        }
+                    })
+            },
+
+        }
+    })
+
+
+</script>
+</html>

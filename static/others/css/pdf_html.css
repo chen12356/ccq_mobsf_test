@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+body {
+  font-family: "Microsoft YaHei UI", "Times New Roman", serif;
+}
+
+#icon{
+    width: 180px;
+    height: 180px;
+}
+.app{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container {
+	top: 50%;
+	left: 50%;
+}
+.basic {
+  width: 100%;
+}
+
+.header {
+  padding: 100px;
+  text-align: center;
+  background: url(../../img/bg.jpg);
+  color: white;
+  font-size: 30px;
+}
+.htext {
+  color: white;
+  font-size: 34pt;
+  width: 100%;
+}
+.htext2 {
+  color: black;
+  font-size: 20pt;
+  text-align: center;
+}
+
+.center{
+  width: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.center h1{
+  text-align: center !important;
+}
+
+.logo{
+    width: 80px;
+    height: 80px;
+}
+
+.score{
+  border: none;
+  border-collapse: collapse;
+  font-size: 30px;
+}
+
+table.no_border, th.no_border, td.no_border {
+  border: none;
+  border-collapse: collapse;
+}
+
+.pagebreak{
+  page-break-before: always;
+}
+
+table { page-break-inside:auto }
+thead { display: table-header-group }
+tfoot { display: table-row-group }
+tr { page-break-inside: avoid }
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th,
+td {
+	padding: 15px;
+}
+th{
+    text-align: left;
+    font-size: 15pt;
+}
+td{
+   height: 10px;
+}
+.wrapped-text {
+    white-space: pre-wrap;
+}
+
+.high {
+  color: #F05239;
+}
+.danger {
+  color: red;
+}
+.warning {
+  color: orange;
+}
+.info {
+  color: #2196f3;
+}
+.success {
+  color: green;
+}
+
+html {
+  color: #393939;
+  font-size: 11pt;
+  font-weight: 300;
+  line-height: 1.5; }
+html body h1 {
+  color: #565656;
+  font-size: 28pt;
+  text-align: center;
+  }
+html body h2, html body h3, html body h4 {
+  color: #4d4d4d;
+  font-weight: 600; }
+html body h2 {
+  font-size: 28pt;}
+html body h3 {
+  font-weight: 300;
+  font-size: 15pt;
+  margin:0;
+  padding:0; }
+html body h4 {
+  font-size: 13pt; }
+h5 {
+  font-size: 11pt;
+  display: inline;
+}
+
+.security{
+  line-height: 40px;
+}
+
+.mani_desc{
+  line-height: 40px;
+  width: 50%;
+}
+/*敏感信息css*/
+.table_url{
+  border: 1px solid black;
+  border-collapse:collapse;
+  word-break: keep-all;
+  width: 100%;
+  table-layout: fixed;
+
+}
+.table_url th {
+  width: content-box;
+  background-color: #dedede;
+}
+.table_url td{
+  width: auto;
+  word-wrap: break-word;
+}
+.url_width{
+  width: 45%;
+}
+
+.source{
+  width: 10%;
+  word-wrap: break-word;
+}

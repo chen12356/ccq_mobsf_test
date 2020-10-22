@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <meta name="robots" content="NONE,NOARCHIVE"/>
+    <title>Add 用户表 | Django Xadmin</title>
+
+    <link rel="stylesheet" href="/static/others/css/element_ui.css">
+    <script src="/static/others/js/axios-0.18.0.min.js"></script>
+    <script src="/static/others/js/vue.js"></script>
+    <script src="/static/others/js/element.js"></script>
+    <link href="/static/xadmin/vendor/bootstrap/css/bootstrap.css" type="text/css" media="screen" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" id="site-theme" href="/static/xadmin/css/themes/bootstrap-xadmin.css"/>
+
+    <link href="/static/xadmin/vendor/font-awesome/css/font-awesome.css" type="text/css" media="screen"
+          rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.main.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.plugins.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.responsive.css" type="text/css" media="screen" rel="stylesheet">
+    <link href="/static/xadmin/css/xadmin.form.css" type="text/css" media="screen" rel="stylesheet">
+
+    <script type="text/javascript" src="/static/xadmin/vendor/jquery/jquery.js"></script>
+
+    <script type="text/javascript">
+        window.__admin_media_prefix__ = "/static/xadmin/";
+        window.__admin_path_prefix__ = "/xadmin";
+        window.__admin_language_code__ = "en-us";
+    </script>
+    <script type="text/javascript" src="/xadminjsi18n/"></script>
+
+
+</head>
+<body class="MobSF-user change-form">
+
+<!-- Header -->
+
+<div id="top-nav" class="navbar navbar-xs navbar-inverse navbar-fixed-top">
+    <div class="navbar-header">
+
+        <button id="main-toggle" class="navbar-toggle pull-left" style="display: none;" data-toggle="class"
+                data-target="#body-content" data-class-name="show_menu"><i class="fa fa-list"></i></button>
+
+        <button class="navbar-toggle pull-left" data-toggle="class" data-target="#body-content"
+                data-class-name="show_menu">
+            <i class="fa fa-list"></i>
+        </button>
+
+        <a class="navbar-brand" href="/">
+            Django Xadmin</a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav pull-right">
+
+
+            <li class="dropdown g-add">
+                <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                    <i class="fa fa-plus"></i> <span class="hide-sm">Add <i class="caret"></i></span></a>
+                <ul id="g-add-menu" class="dropdown-menu" role="menu">
+
+                    <li><a href="/xadminxadmin/userwidget/add/"><i class="fa fa-plus"></i> Add User Widget</a></li>
+
+                    <li><a href="/xadminxadmin/bookmark/add/"><i class="fa fa-plus"></i> Add Bookmark</a></li>
+
+                    <li><a href="/xadminauth/group/add/"><i class="fa fa-plus"></i> Add Group</a></li>
+
+                    <li><a href="/xadminMobSF/user/add/"><i class="fa fa-plus"></i> Add 用户表</a></li>
+
+                    <li><a href="/xadminauth/permission/add/"><i class="fa fa-plus"></i> Add Permission</a></li>
+
+                    <li><a href="/xadminxadmin/usersettings/add/"><i class="fa fa-plus"></i> Add User Setting</a></li>
+
+                    <li><a href="/xadminxadmin/log/add/"><i class="fa fa-plus"></i> Add Log entry</a></li>
+
+                </ul>
+            </li>
+
+
+            <li class="dropdown g-theme">
+                <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                    <i class="fa fa-magic"></i> <span class="hide-sm">Themes <i class="caret"></i></span></a>
+                <ul id="g-theme-menu" class="dropdown-menu" role="menu">
+
+                    <li class="active"><a data-css-href="/static/xadmin/css/themes/bootstrap-xadmin.css">Default</a>
+                    </li>
+
+                    <li><a data-css-href="/static/xadmin/css/themes/bootstrap-theme.css">Bootstrap2</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/cerulean/bootstrap.min.css">Cerulean</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/cosmo/bootstrap.min.css">Cosmo</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/cyborg/bootstrap.min.css">Cyborg</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/darkly/bootstrap.min.css">Darkly</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/flatly/bootstrap.min.css">Flatly</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/journal/bootstrap.min.css">Journal</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/lumen/bootstrap.min.css">Lumen</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/paper/bootstrap.min.css">Paper</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/readable/bootstrap.min.css">Readable</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/sandstone/bootstrap.min.css">Sandstone</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/simplex/bootstrap.min.css">Simplex</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/slate/bootstrap.min.css">Slate</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/spacelab/bootstrap.min.css">Spacelab</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/superhero/bootstrap.min.css">Superhero</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/united/bootstrap.min.css">United</a></li>
+
+                    <li><a data-css-href="https://bootswatch.com/3/yeti/bootstrap.min.css">Yeti</a></li>
+
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
+                    <strong>Welcome, admin</strong>
+                    <span class="caret"></span></a>
+                <ul id="g-account-menu" class="dropdown-menu" role="menu">
+                    <li><a href="/xadminaccount/password/"><i class="fa fa-key"></i> Change Password</a></li>
+                </ul>
+            </li>
+
+            <li><a href="/xadminlogout/"><i class="show-sm fa fa-sign-out"></i><span
+                    class="hide-sm">Log out</span></a></li>
+        </ul>
+
+
+        <form method="get" class="top-search-form navbar-form navbar-left" id="g-search">
+            <div class="input-group">
+                <input name="_q_" class="form-control" type="text">
+                <span class="input-group-btn">
+      <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-search"></i> Search <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+      
+          <li><a data-action="/xadminauth/group/"><i class="fa fa-search"></i> Search Groups</a></li>
+      
+          <li><a data-action="/xadminMobSF/user/"><i class="fa fa-search"></i> Search 用户表</a></li>
+      
+          <li><a data-action="/xadminxadmin/log/"><i class="fa fa-search"></i> Search Log entries</a></li>
+      
+      </ul>
+    </span>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<style>
+
+    @media (min-width: 768px) and (max-width: 991px) {
+        ul.nav-sitemenu {
+            position: fixed;
+            z-index: 100;
+            width: 5%;
+            padding: 10px;
+        }
+
+        #body-content.show_menu .well.nav.nav-pills.nav-stacked.nav-sitemenu.hide-sm {
+            background: #f5f5f5;
+            bottom: inherit;
+            width: 27%;
+        }
+    }
+
+</style>
+
+<div id="body-content" class="clearfix row">
+    <div id="left-side" class="col-sm-1 col-md-2">
+
+
+        <ul class="well nav nav-pills nav-stacked nav-sitemenu hide-sm">
+            <li>
+                <a href="/xadmin"><i class="fa-fw fa fa-home"></i> Home</a>
+            </li>
+
+            <li class="nav-header ">
+
+                Administration
+
+            </li>
+
+            <li>
+
+                <a href="/xadminxadmin/log/">
+
+                    <i class="fa-fw fa fa-cog"></i>
+                    <span>Log entries</span></a>
+            </li>
+
+
+            <li class="nav-header ">
+
+                Authentication and Authorization
+
+            </li>
+
+            <li>
+
+                <a href="/xadminauth/group/">
+
+                    <i class="fa-fw fa fa-group"></i>
+                    <span>Groups</span></a>
+            </li>
+
+            <li>
+
+                <a href="/xadminauth/permission/">
+
+                    <i class="fa-fw fa fa-lock"></i>
+                    <span>Permissions</span></a>
+            </li>
+
+
+            <li class="nav-header  active">
+
+                Mobsf
+
+            </li>
+
+            <li class="active">
+
+                <a href="/xadminMobSF/user/">
+
+                    <i class="fa-fw fa fa-user"></i>
+                    <span>用户表</span></a>
+            </li>
+
+
+        </ul>
+
+
+        <ul class="well nav nav-list nav-sitemenu show-sm">
+            <li class="app_menu">
+                <a href="/xadmin">
+                    <i class="icon fa-fw fa fa-home"></i></a>
+                <hr/>
+            </li>
+
+            <li class="app_menu dropdown-submenu ">
+                <a href="#" class="section">
+                    <i class="icon fa-fw fa fa-cog"></i>
+
+                </a>
+                <hr/>
+                <ul class="dropdown-menu">
+
+                    <li>
+
+                        <a href="/xadminxadmin/log/">
+
+                            <i class="fa-fw fa fa-cog"></i>
+                            <span>Log entries</span></a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="app_menu dropdown-submenu ">
+                <a href="#" class="section">
+                    <i class="icon fa-fw fa fa-group"></i>
+
+                </a>
+                <hr/>
+                <ul class="dropdown-menu">
+
+                    <li>
+
+                        <a href="/xadminauth/group/">
+
+                            <i class="fa-fw fa fa-group"></i>
+                            <span>Groups</span></a>
+                    </li>
+
+                    <li>
+
+                        <a href="/xadminauth/permission/">
+
+                            <i class="fa-fw fa fa-lock"></i>
+                            <span>Permissions</span></a>
+                    </li>
+
+                </ul>
+            </li>
+
+            <li class="app_menu dropdown-submenu  active">
+                <a href="#" class="section">
+                    <i class="icon fa-fw fa fa-user"></i>
+
+                </a>
+                <hr/>
+                <ul class="dropdown-menu">
+
+                    <li class="active">
+
+                        <a href="/xadminMobSF/user/">
+
+                            <i class="fa-fw fa fa-user"></i>
+                            <span>用户表</span></a>
+                    </li>
+
+                </ul>
+            </li>
+
+
+        </ul>
+
+
+    </div>
+
+    <div id="content-block" class="col-sm-11 col-md-10">
+
+        <ul class="breadcrumb">
+
+
+            <li>
+                <a href="/xadmin">Home</a>
+            </li>
+
+            <li>
+                <a href="/xadminMobSF/user/">用户表</a>
+            </li>
+
+            <li>
+                Add 用户表
+
+            </li>
+
+
+        </ul>
+
+
+        <div class="navbar content-navbar navbar-default navbar-xs" data-toggle="breakpoint"
+             data-class-xs="navbar content-navbar navbar-inverse navbar-xs"
+             data-class-sm="navbar content-navbar navbar-default navbar-xs">
+
+            <div class="navbar-header">
+
+
+                <button type="button" class="navbar-toggle pull-left" onclick="javascript: history.back();"><i
+                        class="fa fa-arrow-left"></i></button>
+
+
+                <a class="navbar-brand" data-toggle="collapse" data-target="#top-nav .navbar-collapse">
+                    <i class="fa fa-user"><sub class="fa fa-plus"></sub></i>
+                    Add 用户表
+                </a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+
+
+                <div class="navbar-btn pull-right hide-xs">
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <form class="exform" enctype="multipart/form-data" action="" method="post" id="user_form"><input type="hidden"
+                                                                                                         name="csrfmiddlewaretoken"
+                                                                                                         value="no1emdWX25qiJdSleU0ljXAhqA4sz026ztmuDkWg2ylnL385rG8liJaPHbWIJaoQ">
+
+            <input type='hidden' id='_portal_key' value='MobSF_user_editform_portal'/>
+
+
+            <input type="hidden" name="csrfmiddlewaretoken"
+                   value="no1emdWX25qiJdSleU0ljXAhqA4sz026ztmuDkWg2ylnL385rG8liJaPHbWIJaoQ">
+            <div
+                    class="form-container row clearfix">
+                <div class="formColumn column form-column full col col-sm-12 form-horizontal" span="12" horizontal>
+                    <div class="panel panel-default fieldset unsort no_title">
+                        <div class="panel-heading"><i class='icon fa fa-chevron-up chevron'></i>
+                            <h3 class="panel-title"></h3></div>
+                        <div class="panel-body ">
+                            <div id="div_id_username" class="form-group"><label for="id_username"
+                                                                                class="control-label  requiredField">
+                                用户名<span class="asteriskField">*</span> </label>
+                                <div class="controls "><input @change="verifyusername" v-model="username" type="text"
+                                                              name="username"
+                                                              class="text-field admintextinputwidget form-control"
+                                                              maxlength="20" autocapitalize="none"
+                                                              autocomplete="username" autofocus required
+                                                              id="id_username"></div>
+                            </div>
+                            <div id="div_id_password1" class="form-group"><label for="id_password1"
+                                                                                 class="control-label  requiredField">
+                                Password<span class="asteriskField">*</span> </label>
+                                <div class="controls "><input v-model="password1" @change="verifypassword" type="password"
+                                                              name="password1"
+                                                              autocomplete="new-password"
+                                                              class="textinput textInput form-control form-control"
+                                                              required id="id_password1"></div>
+                            </div>
+                            <div id="div_id_password2" class="form-group"><label for="id_password2"
+                                                                                 class="control-label  requiredField">
+                                Password confirmation<span class="asteriskField">*</span> </label>
+                                <div class="controls "><input v-model="password2" @change="verifysamepassword"
+                                                              type="password"
+                                                              name="password2"
+                                                              autocomplete="new-password"
+                                                              class="textinput textInput form-control form-control"
+                                                              required id="id_password2">
+                                    <div id="hint_id_password2" class="help-block">Enter the same password as before,
+                                        for verification.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions well well-sm clearfix">
+
+
+                <div class="btn-group clearfix show-xs save-group col-xs-12">
+                    <button class="default btn btn-primary col-xs-10" name="_save"
+                            data-loading-text="Saving.."/>
+                    <i class="fa fa-save"></i> Save</button>
+                    <button type="button" class="more btn btn-primary col-xs-2" data-toggle="collapse"
+                            data-target=".nav-collapse.more-btns"><i class="fa fa-ellipsis-vertical"></i></button>
+                </div>
+                <button @click="sendpassword" class="default btn btn-primary hide-xs" name="_save"
+                        data-loading-text="Saving.."/>
+                Save</button>
+
+
+                <div class="nav-collapse collapse more-btns">
+
+                    <input type="submit" class="btn btn-default" value="Save and add another" name="_addanother"/>
+                    <input type="submit" class="btn btn-default" value="Save and continue editing" name="_continue"/>
+
+                </div>
+
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<div id="footer">
+    <hr/>
+    <footer class="text-center">
+        <p>&copy; my-company.inc</p>
+    </footer>
+</div>
+
+
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.sortable.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.main.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.responsive.js"></script>
+<script type="text/javascript" src="/static/xadmin/vendor/jquery-ui/jquery.ui.effect.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.portal.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.page.form.js"></script>
+<script type="text/javascript" src="/static/xadmin/js/xadmin.plugin.themes.js"></script>
+
+<script>
+    var app = new Vue({
+        el: '#body-content',
+        data: {
+            username: '',
+            password1: '',
+            password2: ''
+        },
+        methods: {
+            // 校验用户名
+            verifyusername: function () {
+                var uPattern = new RegExp('(?=[a-zA-Z])(?=.*[a-zA-Z_]).{4,20}')
+                if (this.username == '') {
+                    this.$message.error('用户名为空 ! ! !');
+                } else if (!uPattern.test(this.username)) {
+                   this.$message.error('用户名不符合规范');
+
+                } else {
+                    axios.post('/verifyusername', {
+                        username: this.username
+                    }, {
+                        responseType: 'json',
+                        changeOrigin: true,
+                        withCredentials: true,
+                        headers: {
+                            'Authorization': localStorage.token
+                        }
+                    })
+                        .then(response => {
+                            if (response.data.code == 1) {
+                                this.$message.error('用户名已存在!!');
+                                this.username = ''
+                                let inputelement = document.getElementById('id_username')
+                                inputelement.focus()
+                            }
+                        })
+                }
+            },
+            // 校验密码
+            verifypassword: function () {
+                var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}')
+                if (!regex.test(this.password1)) {
+                    this.$notify({
+                        message: '您的密码复杂度太低（密码中必须包含字母、数字、特殊字符），请及时修改密码!',
+                        type: 'error',
+                        duration: 2000
+                    });
+                    this.password1 = ''
+                }
+            },
+            // 校验密码是否相同
+            verifysamepassword: function () {
+                if (this.password1 != this.password2) {
+                    this.$notify({
+                        message: '密码输入不一致',
+                        type: 'error',
+                        duration: 2000
+                    });
+                }
+            },
+            // 保存用户触发的函数
+            sendpassword: function () {
+                var regex = new RegExp('(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}')
+                var uPattern = new RegExp('(?=[a-zA-Z])(?=.*[a-zA-Z_]).{4,20}')
+                if (this.username == '' || this.password1 == '' || this.password2 == "") {
+                    this.$notify({
+                        message: '用户名或密码为空',
+                        type: 'warning',
+                        duration: 2000
+                    });
+                } else {
+                    if (!uPattern.test(this.username)) {
+                        this.$notify({
+                            message: '用户名不符合规范',
+                            type: 'warning',
+                            duration: 2000
+                        });
+                        this.username = ''
+                    } else if (this.password1 != this.password2) {
+                        this.$notify({
+                            message: '密码输入不一致!',
+                            type: 'error',
+                            duration: 2000
+                        });
+                        this.password1 = ''
+                        this.password2 = ''
+                    } else if (!regex.test(this.password1) || !regex.test(this.password2)) {
+                        this.$notify({
+                            message: '您的密码复杂度太低（密码中必须包含字母、数字、特殊字符），请及时修改密码!',
+                            type: 'error',
+                            duration: 2000
+                        });
+                        this.password1 = ''
+                        this.password2 = ''
+                    }
+                }
+            }
+        }
+    })
+</script>
+</body>
+</html>

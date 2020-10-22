@@ -1,0 +1,72 @@
+body {
+    height: 100%;
+    background: linear-gradient(to left, #00efe4, #2d47ff);
+}
+body {
+    color: #fff;
+    text-align: center;
+    /* text-shadow: 0 1px 3px rgba(0,0,0,.5); */
+  }
+@font-face{
+    font-family: 'mobsf';
+    src:url('fonts/方正大标宋简体.ttf')
+}
+.foot{
+    font-size: 20px;
+    margin-top: 20px;
+}
+.foot img{
+    position: relative;
+    width: 20px;
+    height: 20px;
+    top: 4px;
+}
+  .title{
+      position: relative;
+      font-family: mobsf;
+      font-size: 3.5vw;
+      top: 12vw;
+  }
+
+.login_box{
+    position: relative;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+    margin-top: 13%;
+    min-width: 300px;
+    border-radius: 10px;
+    width: 30%;
+    height: 30%;
+    padding-bottom: 2%;
+}
+.login_input{
+    width: 60%;
+    min-width: 150px;
+    left: 10%;
+    margin-bottom: 2%;
+}
+.usertext{
+    position: relative;
+    font-size: 18px;
+    text-aligh:justify;
+    font-weight: 420;
+    left: -35%;
+    color: #494949;
+    top: 30px;
+}
+.login_button{
+    position: relative;
+    width: 30%;
+    height: 40px;
+    font-size: 25px;
+    line-height: 10px;
+    border-radius: 5px;
+    min-width: 100px;
+    margin:0 auto;
+    background-color:#484848;
+}
+.login_button div{
+    font-weight: 350;
+    text-align: center;
+    color: #F6F6F6;
+}
